@@ -7,10 +7,12 @@ namespace KinopubApi.Tests
     public class Tests : BaseTest
     {
         private KinopubClient _client;
+        private string _accessToken;
 
         protected override void OnInitialize(HttpClient httpClient, ApiClientSettings settings)
         {
             _client = new KinopubClient(httpClient, settings.ClientId, settings.ClientSecret);
+            _accessToken = settings.TestAccessToken;
         }
 
         [Test]
@@ -34,8 +36,8 @@ namespace KinopubApi.Tests
                 }
             }
 
-            _client.Token.Should().NotBeNullOrEmpty();
-            System.Diagnostics.Debug.WriteLine($"Token: {_client.Token}");
+            _client.AccessToken.Should().NotBeNullOrEmpty();
+            System.Diagnostics.Debug.WriteLine($"Token: {_client.AccessToken}");
         }
     }
 }

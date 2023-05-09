@@ -17,7 +17,7 @@ public static class HttpRequestExtensions
         var response = await httpClient.SendAsync(request);
         var content = await response.Content.ReadAsStringAsync();
 
-        if (response.IsSuccessStatusCode)
+        if (!response.IsSuccessStatusCode)
         {
             throw new HttpRequestException(content);
         }

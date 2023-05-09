@@ -9,6 +9,8 @@ public class KinopubClientBuilder : IKinopubClientBuilder
     private string _clientSecret;
     private HttpClient _httpClient;
     private HttpClientHandler _httpClientHandler;
+    private string _accessToken;
+    private string _refreshToken;
 
     public static KinopubClientBuilder CreateBuilder()
     {
@@ -19,6 +21,14 @@ public class KinopubClientBuilder : IKinopubClientBuilder
     {
         _clientId = clientId;
         _clientSecret = clientSecret;
+
+        return this;
+    }
+
+    public IKinopubClientBuilder UseToken(string accessToken, string refreshToken)
+    {
+        _accessToken = accessToken;
+        _refreshToken = refreshToken;
 
         return this;
     }
@@ -49,6 +59,10 @@ public class KinopubClientBuilder : IKinopubClientBuilder
             BaseAddress = new Uri("https://api.service-kp.com/")
         };
 
-        return new KinopubClient(_httpClient, _clientId, _clientSecret);
+        var client = _accessToken != null 
+            ? new KinopubClient(_accessToken, _refreshToken, _httpClient, _clientId, _clientSecret)
+            : new KinopubClient(_httpClient, _clientId, _clientSecret);
+
+        return client;
     }
 }
