@@ -1,9 +1,9 @@
-﻿using System.Net.Http;
+﻿using KinopubApi.Client;
 using KinopubApi.Exceptions;
 
-namespace KinopubApi;
+namespace KinopubApi.Builder;
 
-public class KinopubClientBuilder
+public class KinopubClientBuilder : IKinopubClientBuilder
 {
     private string _clientId;
     private string _clientSecret;
@@ -15,7 +15,7 @@ public class KinopubClientBuilder
         return new KinopubClientBuilder();
     }
 
-    public KinopubClientBuilder AddApiKeys(string clientId, string clientSecret)
+    public IKinopubClientBuilder AddApiKeys(string clientId, string clientSecret)
     {
         _clientId = clientId;
         _clientSecret = clientSecret;
@@ -23,28 +23,31 @@ public class KinopubClientBuilder
         return this;
     }
 
-    public KinopubClientBuilder UseHttpClient(HttpClient httpClient)
+    public IKinopubClientBuilder UseHttpClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
 
         return this;
     }
 
-    public KinopubClientBuilder UseHttpClientHandler(HttpClientHandler httpClientHandler)
+    public IKinopubClientBuilder UseHttpClientHandler(HttpClientHandler httpClientHandler)
     {
         _httpClientHandler = httpClientHandler;
 
         return this;
     }
 
-    public KinopubClient Build()
+    public IKinopubClient Build()
     {
         if (string.IsNullOrEmpty(_clientId) || string.IsNullOrEmpty(_clientSecret))
         {
             throw new InvalidCredentialsException(@"Use ""AddApiKeys"" method in builder to add Kinopub API keys");
         }
 
-        _httpClient ??= new HttpClient(_httpClientHandler ?? new HttpClientHandler());
+        _httpClient ??= new HttpClient(_httpClientHandler ?? new HttpClientHandler())
+        {
+            BaseAddress = new Uri("https://api.service-kp.com/")
+        };
 
         return new KinopubClient(_httpClient, _clientId, _clientSecret);
     }
