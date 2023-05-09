@@ -8,8 +8,9 @@
 
   <ItemGroup>
     <Folder Include="Exceptions\" />
+    <Folder Include="Processors\Interfaces\" />
+    <Folder Include="Processors\Impls\" />
     <Folder Include="Results\" />
-    <Folder Include="Responses\" />
   </ItemGroup>
 
   <ItemGroup>

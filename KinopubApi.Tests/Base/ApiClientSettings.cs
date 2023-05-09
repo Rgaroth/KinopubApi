@@ -1,4 +1,4 @@
-﻿namespace KinopubApi.Tests;
+﻿namespace KinopubApi.Tests.Base;
 
 public class ApiClientSettings
 {

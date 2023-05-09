@@ -1,5 +1,6 @@
 using FluentAssertions;
 using KinopubApi.Client;
+using KinopubApi.Tests.Base;
 
 namespace KinopubApi.Tests
 {

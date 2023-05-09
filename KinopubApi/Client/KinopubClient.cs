@@ -1,5 +1,7 @@
 ﻿using System.Net.Http;
 using KinopubApi.Exceptions;
+using KinopubApi.Processors.Impls;
+using KinopubApi.Processors.Interfaces;
 using KinopubApi.Responses;
 using KinopubApi.Results;
 using Newtonsoft.Json;
@@ -11,11 +13,13 @@ namespace KinopubApi.Client
         private readonly HttpClient _httpClient;
         private readonly string _clientId;
         private readonly string _clientSecret;
-        public string Token { get; set; }
-        
         private PeriodicTimer _authTimer;
 
         public bool IsAuthenticated { get; private set; }
+        public string Token { get; set; }
+        public string RefreshToken { get; set; }
+
+        public IAuthProcessor AuthProcessor { get; }
 
         public KinopubClient(HttpClient httpClient, string clientId, string clientSecret)
         {
@@ -24,21 +28,18 @@ namespace KinopubApi.Client
             _clientSecret = clientSecret;
 
             IsAuthenticated = false;
+
+            AuthProcessor = new AuthProcessor(httpClient, clientId, clientSecret);
         }
 
+        #region AUTH
         public async Task<IKinopubResult<string>> GetDeviceCodeAsync()
         {
             IKinopubResult<string> result = new KinopubResult<string>();
 
             try
             {
-                var deviceResponse = await SendRequestAsync<DeviceResponse>(HttpMethod.Post, "/oauth2/device",
-                    new Dictionary<string, string>
-                    {
-                        { "grant_type", "device_code" },
-                        { "client_id", _clientId },
-                        { "client_secret", _clientSecret },
-                    });
+                var deviceResponse = await AuthProcessor.GetDeviceCodeAsync();
 
                 _authTimer = new PeriodicTimer(TimeSpan.FromSeconds(deviceResponse.Interval));
                 _ = CheckDeviceAuthJobAsync(deviceResponse.Code);
@@ -59,16 +60,9 @@ namespace KinopubApi.Client
             {
                 try
                 {
-                    var response = await SendRequestAsync<DeviceTokenReponse>(HttpMethod.Post, "/oauth2/device",
-                        new Dictionary<string, string>
-                        {
-                            { "grant_type", "device_token" },
-                            { "client_id", _clientId },
-                            { "client_secret", _clientSecret },
-                            { "code", deviceCode },
-                        });
-
+                    var response = await AuthProcessor.GetDeviceTokenAsync(deviceCode);
                     Token = response.AccessToken;
+                    RefreshToken = response.RefreshToken;
 
                 }
                 catch (HttpRequestException)
@@ -87,32 +81,6 @@ namespace KinopubApi.Client
                 throw new ClientAuthException("Timeout");
             }
         }
-
-        private async Task<T> SendRequestAsync<T>(HttpMethod method, string uri, Dictionary<string, string> parameters = null)
-        {
-            uri = parameters != null
-                ? $"{uri}?{string.Join('&', parameters.Select(x => $"{x.Key}={x.Value}"))}"
-                : uri;
-
-            var request = new HttpRequestMessage(method, uri);
-
-            var response = await _httpClient.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-
-            var content = await response.Content.ReadAsStringAsync();
-
-            return JsonConvert.DeserializeObject<T>(content);
-        }
-
-        private async Task<HttpResponseMessage> SendRequestAsync(HttpMethod method, string uri, Dictionary<string, string> parameters = null)
-        {
-            uri = parameters != null
-                ? $"{uri}?{string.Join('&', parameters.Select(x => $"{x.Key}={x.Value}"))}"
-                : uri;
-
-            var request = new HttpRequestMessage(method, uri);
-
-            return await _httpClient.SendAsync(request);
-        }
+        #endregion
     }
 }

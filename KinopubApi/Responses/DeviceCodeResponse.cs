@@ -2,7 +2,7 @@
 
 namespace KinopubApi.Responses;
 
-internal class DeviceResponse
+public class DeviceCodeResponse
 {
     [JsonProperty("code")]
     public string Code { get; set; }

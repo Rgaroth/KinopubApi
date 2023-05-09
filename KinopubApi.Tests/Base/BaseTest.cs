@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace KinopubApi.Tests;
+namespace KinopubApi.Tests.Base;
 
 public abstract class BaseTest
 {

@@ -2,7 +2,7 @@
 
 namespace KinopubApi.Responses;
 
-internal class DeviceTokenReponse
+public class UpdateDeviceTokenResponse
 {
     [JsonProperty("access_token")]
     public string AccessToken { get; set; }
@@ -15,7 +15,4 @@ internal class DeviceTokenReponse
 
     [JsonProperty("refresh_token")]
     public string RefreshToken { get; set; }
-
-    [JsonProperty("scope")]
-    public object Scope { get; set; }
 }
