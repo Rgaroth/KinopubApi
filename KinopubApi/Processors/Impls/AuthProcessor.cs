@@ -1,4 +1,5 @@
-﻿using KinopubApi.Processors.Interfaces;
+﻿using KinopubApi.Models;
+using KinopubApi.Processors.Interfaces;
 using KinopubApi.Responses;
 
 namespace KinopubApi.Processors.Impls;
@@ -11,17 +12,26 @@ internal class AuthProcessor : BaseProcessor, IAuthProcessor
 
     }
 
+    public async Task<HttpResponseMessage> DeviceNotify(DeviceInfo deviceInfo)
+    {
+        return await HttpClient.SendRequestAsync(HttpMethod.Post, "/v1/device/notify",
+            new Dictionary<string, string>
+            {
+                { "title", deviceInfo.Title },
+                { "hardware", deviceInfo.Hardware },
+                { "software", deviceInfo.Software }
+            });
+    }
+
     public async Task<DeviceCodeResponse> GetDeviceCodeAsync()
     {
-        var res =  await HttpClient.SendRequestAsync<DeviceCodeResponse>(HttpMethod.Post, "/oauth2/device",
+        return await HttpClient.SendRequestAsync<DeviceCodeResponse>(HttpMethod.Post, "/oauth2/device",
             new Dictionary<string, string>
             {
                 { "grant_type", "device_code" },
                 { "client_id", ClientId },
                 { "client_secret", ClientSecret },
             });
-
-        return res;
     }
 
     public async Task<DeviceTokenResponse> GetDeviceTokenAsync(string deviceCode)

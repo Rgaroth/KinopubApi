@@ -2,42 +2,41 @@ using FluentAssertions;
 using KinopubApi.Client;
 using KinopubApi.Tests.Base;
 
-namespace KinopubApi.Tests
+namespace KinopubApi.Tests;
+
+public class Tests : BaseTest
 {
-    public class Tests : BaseTest
+    [Test]
+    public async Task GetDeviceCode_IsNotNull_True()
     {
-        private KinopubClient _client;
-        private string _accessToken;
+        var response = await _notAuthClient.GetDeviceCodeAsync();
 
-        protected override void OnInitialize(HttpClient httpClient, ApiClientSettings settings)
+        response.IsSuccess.Should().BeTrue();
+        response.Data.Should().NotBeNullOrEmpty();
+
+        System.Diagnostics.Debug.WriteLine($"Code: {response.Data}");
+
+        var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+        var token = new CancellationTokenSource(TimeSpan.Parse("00:01:00")).Token;
+
+        while (await timer.WaitForNextTickAsync(token) || !token.IsCancellationRequested)
         {
-            _client = new KinopubClient(httpClient, settings.ClientId, settings.ClientSecret);
-            _accessToken = settings.TestAccessToken;
-        }
-
-        [Test]
-        public async Task GetDeviceCode_IsNotNull_True()
-        {
-            var response = await _client.GetDeviceCodeAsync();
-
-            response.IsSuccess.Should().BeTrue();
-            response.Data.Should().NotBeNullOrEmpty();
-
-            System.Diagnostics.Debug.WriteLine($"Code: {response.Data}");
-
-            var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
-            var token = new CancellationTokenSource(TimeSpan.Parse("00:01:00")).Token;
-
-            while (await timer.WaitForNextTickAsync(token) || !token.IsCancellationRequested)
+            if (_notAuthClient.IsAuthenticated)
             {
-                if (_client.IsAuthenticated)
-                {
-                    break;
-                }
+                break;
             }
-
-            _client.AccessToken.Should().NotBeNullOrEmpty();
-            System.Diagnostics.Debug.WriteLine($"Token: {_client.AccessToken}");
         }
+
+        _notAuthClient.AccessToken.Should().NotBeNullOrEmpty();
+        System.Diagnostics.Debug.WriteLine($"Token: {_notAuthClient.AccessToken}");
+    }
+
+    [Test]
+    public async Task GetUserAsync_IsNotNull_True()
+    {
+        var response = await _client.UserProcessor.GetUserAsync();
+
+        response.User.Should().NotBeNull();
+        response.User.Username.Should().NotBeNullOrEmpty();
     }
 }

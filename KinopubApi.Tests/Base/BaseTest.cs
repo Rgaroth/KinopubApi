@@ -1,12 +1,17 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using KinopubApi.Client;
+using Microsoft.Extensions.Configuration;
 
 namespace KinopubApi.Tests.Base;
 
 public abstract class BaseTest
 {
+    protected KinopubClient _notAuthClient;
+    protected KinopubClient _client;
+    protected string _accessToken;
+
     private static IConfigurationRoot Config;
 
-    static BaseTest()
+    public BaseTest()
     {
         Config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
     }
@@ -14,17 +19,17 @@ public abstract class BaseTest
     [OneTimeSetUp]
     public void Initialize()
     {
-        var actionLogClientSettings = Config.GetSection(nameof(ApiClientSettings)).Get<ApiClientSettings>();
+        var settings = Config.GetSection(nameof(ApiClientSettings)).Get<ApiClientSettings>();
 
         var httpClient = new HttpClient(new HttpClientHandler())
         {
-            BaseAddress = new Uri(actionLogClientSettings.BaseUrl),
-            Timeout = actionLogClientSettings.Timeout
+            BaseAddress = new Uri(settings.BaseUrl),
+            Timeout = settings.Timeout
         };
 
-        OnInitialize(httpClient, actionLogClientSettings);
+        _notAuthClient = new KinopubClient(httpClient, settings.ClientId, settings.ClientSecret);
+        _client = new KinopubClient(settings.TestAccessToken, null, httpClient, settings.ClientId, settings.ClientSecret);
+
+        _accessToken = settings.TestAccessToken;
     }
-
-    protected abstract void OnInitialize(HttpClient httpClient, ApiClientSettings settings);
-
 }
