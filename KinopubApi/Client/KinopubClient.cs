@@ -24,6 +24,7 @@ namespace KinopubApi.Client
         public IUserProcessor UserProcessor { get; private set; }
         public IReferencesProcessor ReferencesProcessor { get; private set; }
         public IDevicesProcessor DevicesProcessor { get; private set; }
+        public IVideoContentProcessor VideoContentProcessor { get; private set; }
 
         public KinopubClient(HttpClient httpClient, string clientId, string clientSecret)
         {
@@ -57,6 +58,7 @@ namespace KinopubApi.Client
             UserProcessor = new UserProcessor(httpClient, clientId, clientSecret);
             ReferencesProcessor = new ReferencesProcessor(httpClient, clientId, clientSecret);
             DevicesProcessor = new DevicesProcessor(httpClient, clientId, clientSecret);
+            VideoContentProcessor = new VideoContentProcessor(httpClient, clientId, clientSecret);
         }
 
         #region AUTH

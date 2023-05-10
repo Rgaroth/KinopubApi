@@ -4,6 +4,13 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Kinopub API</Title>
+    <Authors>Rgaroth</Authors>
+    <Description>Wrapper for API of Kinopub</Description>
+    <PackageProjectUrl>https://github.com/Rgaroth/KinopubApi</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Rgaroth/KinopubApi</RepositoryUrl>
+    <PackageTags>kinopub, kino, pub, api</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

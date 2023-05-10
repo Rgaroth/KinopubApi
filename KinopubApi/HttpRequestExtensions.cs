@@ -11,7 +11,7 @@ internal static class HttpRequestExtensions
         Dictionary<string, string> parameters = null,
         object json = null)
     {
-        uri = parameters != null
+        uri = parameters != null && parameters.Any()
             ? $"{uri}?{string.Join('&', parameters.Select(x => $"{x.Key}={x.Value}"))}"
             : uri;
 

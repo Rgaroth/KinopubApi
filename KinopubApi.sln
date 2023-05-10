@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinopubApi", "KinopubApi\KinopubApi.csproj", "{84DB87BB-88CC-48CC-8A7A-8C8DC9CACD30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KinopubApi", "KinopubApi\KinopubApi.csproj", "{84DB87BB-88CC-48CC-8A7A-8C8DC9CACD30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinopubApi.Tests", "KinopubApi.Tests\KinopubApi.Tests.csproj", "{951C1CDE-848A-4F6A-A04A-018F4BE95543}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KinopubApi.Tests", "KinopubApi.Tests\KinopubApi.Tests.csproj", "{951C1CDE-848A-4F6A-A04A-018F4BE95543}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,5 @@
-﻿using KinopubApi.Client;
+﻿using KinopubApi.Builder;
+using KinopubApi.Client;
 using Microsoft.Extensions.Configuration;
 
 namespace KinopubApi.Tests.Base;

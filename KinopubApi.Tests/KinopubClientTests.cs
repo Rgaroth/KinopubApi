@@ -23,6 +23,7 @@ public class Tests : BaseTest
         {
             if (_notAuthClient.IsAuthenticated)
             {
+                timer.Dispose();
                 break;
             }
         }
