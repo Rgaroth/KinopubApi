@@ -47,3 +47,4 @@
 	public IUserProcessor UserProcessor { get; private set; }
 	public IReferencesProcessor ReferencesProcessor { get; private set; }
 	public IDevicesProcessor DevicesProcessor { get; private set; }
+	public IVideoContentProcessor VideoContentProcessor { get; private set; }
