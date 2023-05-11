@@ -6,7 +6,7 @@ namespace KinopubApi.Responses;
 public class GetSubtitlesAndVideosResponse
 {
     [JsonProperty("id")]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     [JsonProperty("files")]
     public List<GetItemResponse.File> Files { get; set; }

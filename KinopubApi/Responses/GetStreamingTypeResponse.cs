@@ -13,7 +13,7 @@ public class GetStreamingTypeResponse
     public class Item
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("code")]
         public string Code { get; set; }

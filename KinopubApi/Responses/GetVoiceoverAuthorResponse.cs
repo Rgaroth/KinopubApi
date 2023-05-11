@@ -13,7 +13,7 @@ public class GetVoiceoverAuthorResponse
     public class Item
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("title")]
         public string Title { get; set; }

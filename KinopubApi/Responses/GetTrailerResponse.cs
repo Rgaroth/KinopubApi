@@ -13,7 +13,7 @@ public class GetTrailerResponse
     public class TrailerItem
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("url")]
         public string Url { get; set; }

@@ -13,7 +13,7 @@ public class GetServerLocationResponse
     public class Item
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("location")]
         public string Location { get; set; }

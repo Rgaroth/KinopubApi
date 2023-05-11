@@ -136,7 +136,7 @@ public  class GetDevicesResponse
     public class Value
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("label")]
         public string Label { get; set; }

@@ -16,7 +16,7 @@ public class GetCommentsResponse
     public class Comment
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("depth")]
         public int Depth { get; set; }
@@ -43,7 +43,7 @@ public class GetCommentsResponse
     public class ContentItem
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("title")]
         public string Title { get; set; }
@@ -52,7 +52,7 @@ public class GetCommentsResponse
     public class User
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }

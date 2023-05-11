@@ -16,6 +16,7 @@ public interface IKinopubClient
     IReferencesProcessor ReferencesProcessor { get; }
     IDevicesProcessor DevicesProcessor { get; }
     IVideoContentProcessor VideoContentProcessor { get; }
+    ITvProcessor TvProcessor { get; }
 
     Task<IKinopubResult<string>> GetDeviceCodeAsync();
 }
