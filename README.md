@@ -48,3 +48,4 @@
 	public IReferencesProcessor ReferencesProcessor { get; private set; }	// https://kinoapi.com/api_references.html
 	public IDevicesProcessor DevicesProcessor { get; private set; }		// https://kinoapi.com/api_device.html
 	public IVideoContentProcessor VideoContentProcessor { get; private set; }//https://kinoapi.com/api_video.html
+	public IBookmarksProcessor BookmarksProcessor { get; private set; }	// https://kinoapi.com/api_bookmarks.html
