@@ -18,14 +18,8 @@ internal class VideoContentProcessor : BaseProcessor, IVideoContentProcessor
 
     public async Task<GetContentGenresResponse> GetContentGenresAsync(GenreType? type = null)
     {
-        var dict = new Dictionary<string, string>();
-
-        if (type != null)
-        {
-            dict.Add("type", type.ToString());
-        }
-
-        return await HttpClient.SendRequestAsync<GetContentGenresResponse>(HttpMethod.Get, $"/v1/genres", dict);
+        return await HttpClient.SendRequestAsync<GetContentGenresResponse>(HttpMethod.Get, $"/v1/genres",
+            HttpRequestExtensions.CreateParameters(("type", type)));
     }
 
     public async Task<GetСountriesResponse> GetСountriesAsync()
@@ -69,77 +63,46 @@ internal class VideoContentProcessor : BaseProcessor, IVideoContentProcessor
 
     public async Task<GetItemsResponse> SearchAsync(string q, int? countPerPage = null, Field? field = null, GenreType? type = null)
     {
-        var dict = new Dictionary<string, string>
-        {
-            {"q", q }
-        };
-
-        if (countPerPage.HasValue)
-        {
-            dict.Add("perpage", countPerPage.Value.ToString());
-        }
-
-        if (field.HasValue)
-        {
-            dict.Add("field", field.Value.ToString());
-        }
-
-        if (type.HasValue)
-        {
-            dict.Add("type", type.Value.ToString());
-        }
-
-        return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items/search", dict);
+        return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items/search",
+            HttpRequestExtensions.CreateParameters(
+                ("q", q),
+                ("perpage", countPerPage),
+                ("field", field),
+                ("type", type)));
     }
 
     public async Task<GetItemsResponse> GetSimilarAsync(long itemId)
     {
         return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items/similar",
-            new Dictionary<string, string>
-            {
-                {"id", itemId.ToString()}
-            });
+            HttpRequestExtensions.CreateParameters(("id", itemId)));
     }
 
     public async Task<GetItemResponse> GetItemAsync(long itemId, bool? noLinks = null)
     {
-        var dict = new Dictionary<string, string>();
-
-        if (noLinks.HasValue && noLinks.Value)
-        {
-            dict.Add("nolinks", "1");
-        }
-
-        return await HttpClient.SendRequestAsync<GetItemResponse>(HttpMethod.Get, $"/v1/items/{itemId}", dict);
+        return await HttpClient.SendRequestAsync<GetItemResponse>(HttpMethod.Get, $"/v1/items/{itemId}",
+            HttpRequestExtensions.CreateParameters(("nolinks", "1")));
     }
 
     public async Task<GetSubtitlesAndVideosResponse> GetSubtitlesAndVideosAsync(long mediaId)
     {
         return await HttpClient.SendRequestAsync<GetSubtitlesAndVideosResponse>(HttpMethod.Get, $"/v1/items/media-links",
-            new Dictionary<string, string>
-            {
-                {"mid", mediaId.ToString()}
-            });
+            HttpRequestExtensions.CreateParameters(("mid", mediaId)));
     }
 
     public async Task<UrlItem> GetVideoFileUrlAsync(string filePath, StreamType type)
     {
         return await HttpClient.SendRequestAsync<UrlItem>(HttpMethod.Get, $"/v1/items/media-video-link",
-           new Dictionary<string, string>
-           {
-               {"file", filePath},
-               {"type", type.ToString() }
-           });
+            HttpRequestExtensions.CreateParameters(
+                ("file", filePath),
+                ("type", type)));
     }
 
     public async Task<VoteForVideoResponse> VoteForVideoAsync(long itemId, bool isLike)
     {
         return await HttpClient.SendRequestAsync<VoteForVideoResponse>(HttpMethod.Get, $"/v1/items/vote",
-           new Dictionary<string, string>
-           {
-               {"id", itemId.ToString()},
-               {"like", isLike ? "1" : "0" }
-           });
+            HttpRequestExtensions.CreateParameters(
+                ("id", itemId),
+                ("like", isLike ? "1" : "0")));
     }
 
     public async Task<GetCommentsResponse> GetCommentsAsync(long itemId)
@@ -154,42 +117,33 @@ internal class VideoContentProcessor : BaseProcessor, IVideoContentProcessor
     public async Task<GetTrailerResponse> GetTrailerAsync(long itemId)
     {
         return await HttpClient.SendRequestAsync<GetTrailerResponse>(HttpMethod.Get, $"/v1/items/trailer",
-           new Dictionary<string, string>
-           {
-               {"id", itemId.ToString()}
-           });
+            HttpRequestExtensions.CreateParameters(("id", itemId)));
     }
 
     public async Task<GetItemsResponse> GetFreshAsync(GenreType type, int numPage = 0, int perPage = 25)
     {
         return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items/fresh",
-           new Dictionary<string, string>
-           {
-               {"type", type.ToString()},
-               {"page", numPage.ToString()},
-               {"perpage", perPage.ToString()},
-           });
+            HttpRequestExtensions.CreateParameters(
+                ("type", type),
+                ("page", numPage),
+                ("perpage", perPage)));
     }
 
     public async Task<GetItemsResponse> GetHotAsync(GenreType type, int numPage = 0, int perPage = 25)
     {
         return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items/hot",
-           new Dictionary<string, string>
-           {
-               {"type", type.ToString()},
-               {"page", numPage.ToString()},
-               {"perpage", perPage.ToString()},
-           });
+             HttpRequestExtensions.CreateParameters(
+                ("type", type),
+                ("page", numPage),
+                ("perpage", perPage)));
     }
 
     public async Task<GetItemsResponse> GetPopularAsync(GenreType type, int numPage = 0, int perPage = 25)
     {
         return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items/popular",
-           new Dictionary<string, string>
-           {
-               {"type", type.ToString()},
-               {"page", numPage.ToString()},
-               {"perpage", perPage.ToString()},
-           });
+             HttpRequestExtensions.CreateParameters(
+                ("type", type),
+                ("page", numPage),
+                ("perpage", perPage)));
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace KinopubApi.Processors.Impls
+namespace KinopubApi.Responses
 {
     public class VoteForVideoResponse
     {

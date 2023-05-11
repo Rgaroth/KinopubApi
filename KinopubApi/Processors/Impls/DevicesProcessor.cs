@@ -22,10 +22,7 @@ internal class DevicesProcessor : BaseProcessor, IDevicesProcessor
     public async Task<HttpResponseMessage> RemoveDevice(int deviceId)
     {
         return await HttpClient.SendRequestAsync(HttpMethod.Post, "/v1/device/remove",
-            new Dictionary<string, string>
-            {
-                {"id", deviceId.ToString()}
-            });
+            HttpRequestExtensions.CreateParameters(("id", deviceId)));
     }
 
     public async Task<GetDeviceInfoResponse> GetDeviceInfoAsync(long deviceId)

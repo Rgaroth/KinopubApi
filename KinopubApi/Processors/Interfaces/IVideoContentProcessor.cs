@@ -1,5 +1,4 @@
 ﻿using KinopubApi.Enums;
-using KinopubApi.Processors.Impls;
 using KinopubApi.Responses;
 
 namespace KinopubApi.Processors.Interfaces;

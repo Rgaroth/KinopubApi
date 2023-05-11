@@ -26,12 +26,10 @@ internal class AuthProcessor : BaseProcessor, IAuthProcessor
     public async Task<DeviceCodeResponse> GetDeviceCodeAsync()
     {
         return await HttpClient.SendRequestAsync<DeviceCodeResponse>(HttpMethod.Post, "/oauth2/device",
-            new Dictionary<string, string>
-            {
-                { "grant_type", "device_code" },
-                { "client_id", ClientId },
-                { "client_secret", ClientSecret },
-            });
+            HttpRequestExtensions.CreateParameters(
+                ("grant_type", "device_code"),
+                ("client_id", ClientId),
+                ("client_secret", ClientSecret)));
     }
 
     public async Task<DeviceTokenResponse> GetDeviceTokenAsync(string deviceCode)
@@ -42,13 +40,11 @@ internal class AuthProcessor : BaseProcessor, IAuthProcessor
         }
 
         return await HttpClient.SendRequestAsync<DeviceTokenResponse>(HttpMethod.Post, "/oauth2/device",
-            new Dictionary<string, string>
-            {
-                { "grant_type", "device_token" },
-                { "client_id", ClientId },
-                { "client_secret", ClientSecret },
-                { "code", deviceCode },
-            });
+           HttpRequestExtensions.CreateParameters(
+                ("grant_type", "device_token"),
+                ("client_id", ClientId),
+                ("client_secret", ClientSecret),
+                ("code", deviceCode)));
     }
 
     public async Task<UpdateDeviceTokenResponse> UpdateDeviceTokenAsync(string refreshToken)
@@ -59,12 +55,10 @@ internal class AuthProcessor : BaseProcessor, IAuthProcessor
         }
 
         return await HttpClient.SendRequestAsync<UpdateDeviceTokenResponse>(HttpMethod.Post, "/oauth2/token",
-            new Dictionary<string, string>
-            {
-                { "grant_type", "refresh_token" },
-                { "client_id", ClientId },
-                { "client_secret", ClientSecret },
-                { "refresh_token", refreshToken },
-            });
+            HttpRequestExtensions.CreateParameters(
+                ("grant_type", "refresh_token"),
+                ("client_id", ClientId),
+                ("client_secret", ClientSecret),
+                ("refresh_token", refreshToken)));
     }
 }
