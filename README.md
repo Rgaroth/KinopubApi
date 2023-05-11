@@ -43,7 +43,8 @@
 ## Процессоры
 Разделы документации API Кинопаба реализованы процессорами с такими же именами. Вот все реализованные:
 
-	public IAuthProcessor AuthProcessor { get; private set; }
-	public IUserProcessor UserProcessor { get; private set; }
-	public IReferencesProcessor ReferencesProcessor { get; private set; }
-	public IDevicesProcessor DevicesProcessor { get; private set; }
+	public IAuthProcessor AuthProcessor { get; private set; }		// https://kinoapi.com/authentication.html
+	public IUserProcessor UserProcessor { get; private set; }		// https://kinoapi.com/user.html
+	public IReferencesProcessor ReferencesProcessor { get; private set; }	// https://kinoapi.com/api_references.html
+	public IDevicesProcessor DevicesProcessor { get; private set; }		// https://kinoapi.com/api_device.html
+	public IVideoContentProcessor VideoContentProcessor { get; private set; }//https://kinoapi.com/api_video.html
