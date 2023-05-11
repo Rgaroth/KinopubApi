@@ -9,9 +9,9 @@ namespace KinopubApi.Processors.Impls
         {
         }
 
-        public async Task<GetUserResponse> GetUserAsync()
+        public async Task<GetUserResponse> GetUserAsync(CancellationToken token)
         {
-            return await HttpClient.SendRequestAsync<GetUserResponse>(HttpMethod.Post, "/v1/user");
+            return await HttpClient.SendRequestAsync<GetUserResponse>(HttpMethod.Post, "/v1/user", token);
         }
     }
 }

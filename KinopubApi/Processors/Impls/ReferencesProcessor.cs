@@ -9,28 +9,28 @@ internal class ReferencesProcessor : BaseProcessor, IReferencesProcessor
     {
     }
 
-    public async Task<GetServerLocationResponse> GetServerLocationAsync()
+    public async Task<GetServerLocationResponse> GetServerLocationAsync(CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetServerLocationResponse>(HttpMethod.Get, "/v1/references/server-location");
+        return await HttpClient.SendRequestAsync<GetServerLocationResponse>(HttpMethod.Get, "/v1/references/server-location", token);
     }
 
-    public async Task<GetStreamingTypeResponse> GetStreamingTypeAsync()
+    public async Task<GetStreamingTypeResponse> GetStreamingTypeAsync(CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetStreamingTypeResponse>(HttpMethod.Get, "/v1/references/streaming-type");
+        return await HttpClient.SendRequestAsync<GetStreamingTypeResponse>(HttpMethod.Get, "/v1/references/streaming-type", token);
     }
 
-    public async Task<GetVoiceoverTypeResponse> GetVoiceoverTypeAsync()
+    public async Task<GetVoiceoverTypeResponse> GetVoiceoverTypeAsync(CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetVoiceoverTypeResponse>(HttpMethod.Get, "/v1/references/voiceover-type");
+        return await HttpClient.SendRequestAsync<GetVoiceoverTypeResponse>(HttpMethod.Get, "/v1/references/voiceover-type", token);
     }
 
-    public async Task<GetVoiceoverAuthorResponse> GetVoiceoverAuthorAsync()
+    public async Task<GetVoiceoverAuthorResponse> GetVoiceoverAuthorAsync(CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetVoiceoverAuthorResponse>(HttpMethod.Get, "/v1/references/voiceover-author");
+        return await HttpClient.SendRequestAsync<GetVoiceoverAuthorResponse>(HttpMethod.Get, "/v1/references/voiceover-author", token);
     }
 
-    public async Task<GetVideoQualityResponse> GetVideoQualityAsync()
+    public async Task<GetVideoQualityResponse> GetVideoQualityAsync(CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetVideoQualityResponse>(HttpMethod.Get, "/v1/references/video-quality");
+        return await HttpClient.SendRequestAsync<GetVideoQualityResponse>(HttpMethod.Get, "/v1/references/video-quality", token);
     }
 }

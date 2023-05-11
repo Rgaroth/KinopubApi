@@ -4,5 +4,5 @@ namespace KinopubApi.Processors.Interfaces;
 
 public interface IUserProcessor
 {
-    Task<GetUserResponse> GetUserAsync();
+    Task<GetUserResponse> GetUserAsync(CancellationToken token);
 }

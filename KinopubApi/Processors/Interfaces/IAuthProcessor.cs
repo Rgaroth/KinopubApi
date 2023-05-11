@@ -5,8 +5,8 @@ namespace KinopubApi.Processors.Interfaces;
 
 public interface IAuthProcessor
 {
-    Task<DeviceCodeResponse> GetDeviceCodeAsync();
-    Task<DeviceTokenResponse> GetDeviceTokenAsync(string deviceCode);
-    Task<UpdateDeviceTokenResponse> UpdateDeviceTokenAsync(string refreshToken);
-    Task<HttpResponseMessage> DeviceNotify(DeviceInfo deviceInfo);
+    Task<DeviceCodeResponse> GetDeviceCodeAsync(CancellationToken token);
+    Task<DeviceTokenResponse> GetDeviceTokenAsync(string deviceCode, CancellationToken token);
+    Task<UpdateDeviceTokenResponse> UpdateDeviceTokenAsync(string refreshToken, CancellationToken token);
+    Task<HttpResponseMessage> DeviceNotify(DeviceInfo deviceInfo, CancellationToken token);
 }

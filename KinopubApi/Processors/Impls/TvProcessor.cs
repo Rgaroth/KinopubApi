@@ -9,8 +9,8 @@ internal class TvProcessor : BaseProcessor, ITvProcessor
     {
     }
 
-    public async Task<GetTvChannelsResponse> GetTvChannelsAsync()
+    public async Task<GetTvChannelsResponse> GetTvChannelsAsync(CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetTvChannelsResponse>(HttpMethod.Get, "/v1/tv");
+        return await HttpClient.SendRequestAsync<GetTvChannelsResponse>(HttpMethod.Get, "/v1/tv", token);
     }
 }

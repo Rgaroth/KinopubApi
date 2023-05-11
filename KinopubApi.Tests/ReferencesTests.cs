@@ -8,7 +8,7 @@ public class ReferencesTests : BaseTest
     [Test]
     public async Task GetServerLocationAsync_IsNotNull_True()
     {
-        var response = await _client.ReferencesProcessor.GetServerLocationAsync();
+        var response = await _client.ReferencesProcessor.GetServerLocationAsync(_token);
         
         response.Items.Any().Should().BeTrue();
     }
@@ -16,7 +16,7 @@ public class ReferencesTests : BaseTest
     [Test]
     public async Task GetVoiceoverAuthorAsync_IsNotNull_True()
     {
-        var response = await _client.ReferencesProcessor.GetVoiceoverAuthorAsync();
+        var response = await _client.ReferencesProcessor.GetVoiceoverAuthorAsync(_token);
 
         response.Items.Any().Should().BeTrue();
     }
@@ -24,7 +24,7 @@ public class ReferencesTests : BaseTest
     [Test]
     public async Task GetVoiceoverTypeAsync_IsNotNull_True()
     {
-        var response = await _client.ReferencesProcessor.GetVoiceoverTypeAsync();
+        var response = await _client.ReferencesProcessor.GetVoiceoverTypeAsync(_token);
 
         response.Items.Any().Should().BeTrue();
     }
@@ -32,7 +32,7 @@ public class ReferencesTests : BaseTest
     [Test]
     public async Task GetStreamingTypeAsync_IsNotNull_True()
     {
-        var response = await _client.ReferencesProcessor.GetStreamingTypeAsync();
+        var response = await _client.ReferencesProcessor.GetStreamingTypeAsync(_token);
 
         response.Items.Any().Should().BeTrue();
     }
@@ -40,7 +40,7 @@ public class ReferencesTests : BaseTest
     [Test]
     public async Task GetVideoQualityAsync_IsNotNull_True()
     {
-        var response = await _client.ReferencesProcessor.GetVideoQualityAsync();
+        var response = await _client.ReferencesProcessor.GetVideoQualityAsync(_token);
 
         response.Items.Any().Should().BeTrue();
     }

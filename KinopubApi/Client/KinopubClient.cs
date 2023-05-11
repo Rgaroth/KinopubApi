@@ -6,6 +6,7 @@ using KinopubApi.Processors.Interfaces;
 using KinopubApi.Responses;
 using KinopubApi.Results;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace KinopubApi.Client
 {
@@ -66,7 +67,7 @@ namespace KinopubApi.Client
         }
 
         #region AUTH
-        public async Task<IKinopubResult<string>> GetDeviceCodeAsync()
+        public async Task<IKinopubResult<string>> GetDeviceCodeAsync(CancellationToken token)
         {
             IKinopubResult<string> result = new KinopubResult<string>();
             
@@ -77,7 +78,7 @@ namespace KinopubApi.Client
 
             try
             {
-                var deviceResponse = await AuthProcessor.GetDeviceCodeAsync();
+                var deviceResponse = await AuthProcessor.GetDeviceCodeAsync(token);
 
                 _authTimer = new PeriodicTimer(TimeSpan.FromSeconds(deviceResponse.Interval));
                 _ = CheckDeviceAuthJobAsync(deviceResponse.Code);
@@ -98,7 +99,7 @@ namespace KinopubApi.Client
             {
                 try
                 {
-                    var response = await AuthProcessor.GetDeviceTokenAsync(deviceCode);
+                    var response = await AuthProcessor.GetDeviceTokenAsync(deviceCode, token);
                     AccessToken = response.AccessToken;
                     RefreshToken = response.RefreshToken;
 

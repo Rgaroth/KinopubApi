@@ -4,13 +4,13 @@ namespace KinopubApi.Processors.Interfaces;
 
 public interface IReferencesProcessor
 {
-    Task<GetServerLocationResponse> GetServerLocationAsync();
+    Task<GetServerLocationResponse> GetServerLocationAsync(CancellationToken token);
 
-    Task<GetStreamingTypeResponse> GetStreamingTypeAsync();
+    Task<GetStreamingTypeResponse> GetStreamingTypeAsync(CancellationToken token);
 
-    Task<GetVoiceoverTypeResponse> GetVoiceoverTypeAsync();
+    Task<GetVoiceoverTypeResponse> GetVoiceoverTypeAsync(CancellationToken token);
 
-    Task<GetVoiceoverAuthorResponse> GetVoiceoverAuthorAsync();
+    Task<GetVoiceoverAuthorResponse> GetVoiceoverAuthorAsync(CancellationToken token);
 
-    Task<GetVideoQualityResponse> GetVideoQualityAsync();
+    Task<GetVideoQualityResponse> GetVideoQualityAsync(CancellationToken token);
 }

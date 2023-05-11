@@ -4,5 +4,5 @@ namespace KinopubApi.Processors.Interfaces;
 
 public interface ITvProcessor
 {
-    Task<GetTvChannelsResponse> GetTvChannelsAsync();
+    Task<GetTvChannelsResponse> GetTvChannelsAsync(CancellationToken token);
 }

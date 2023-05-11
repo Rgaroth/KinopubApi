@@ -8,8 +8,8 @@ public class DevicesTests : BaseTest
     [Test]
     public async Task GetDevicesAsync_IsNotNull_True()
     {
-        var response = await _client.DevicesProcessor.GetDevicesAsync();
-        var deviceInfo = await _client.DevicesProcessor.GetDeviceInfoAsync(response.Devices.First().Id);
+        var response = await _client.DevicesProcessor.GetDevicesAsync(_token);
+        var deviceInfo = await _client.DevicesProcessor.GetDeviceInfoAsync(response.Devices.First().Id, _token);
 
         response.Devices.Any().Should().BeTrue();
         deviceInfo.Device.Should().NotBeNull();
@@ -18,7 +18,7 @@ public class DevicesTests : BaseTest
     [Test]
     public async Task GetCurrentDeviceInfoAsync_IsNotNull_True()
     {
-        var response = await _client.DevicesProcessor.GetCurrentDeviceInfoAsync();
+        var response = await _client.DevicesProcessor.GetCurrentDeviceInfoAsync(_token);
 
         response.Device.Should().NotBeNull();
     }
@@ -26,8 +26,8 @@ public class DevicesTests : BaseTest
     [Test]
     public async Task GetDeviceSettingsAsync_IsNotNull_True()
     {
-        var device = await _client.DevicesProcessor.GetCurrentDeviceInfoAsync(); 
-        var response = await _client.DevicesProcessor.GetDeviceSettingsAsync(device.Device.Id);
+        var device = await _client.DevicesProcessor.GetCurrentDeviceInfoAsync(_token); 
+        var response = await _client.DevicesProcessor.GetDeviceSettingsAsync(device.Device.Id, _token);
 
         response.Settings.Should().NotBeNull();
     }

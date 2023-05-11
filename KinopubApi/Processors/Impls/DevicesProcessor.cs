@@ -9,39 +9,40 @@ internal class DevicesProcessor : BaseProcessor, IDevicesProcessor
     {
     }
 
-    public async Task<GetDevicesResponse> GetDevicesAsync()
+    public async Task<GetDevicesResponse> GetDevicesAsync(CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetDevicesResponse>(HttpMethod.Get, "/v1/device");
+        return await HttpClient.SendRequestAsync<GetDevicesResponse>(HttpMethod.Get, "/v1/device", token);
     }
 
-    public async Task<HttpResponseMessage> UnlinkCurrentDevice()
+    public async Task<HttpResponseMessage> UnlinkCurrentDevice(CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync(HttpMethod.Post, "/v1/device/unlink");
+        return await HttpClient.SendRequestAsync(HttpMethod.Post, "/v1/device/unlink", token);
     }
 
-    public async Task<HttpResponseMessage> RemoveDevice(int deviceId)
+    public async Task<HttpResponseMessage> RemoveDevice(int deviceId, CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync(HttpMethod.Post, "/v1/device/remove",
+        return await HttpClient.SendRequestAsync(HttpMethod.Post, "/v1/device/remove", token,
             HttpRequestExtensions.CreateParameters(("id", deviceId)));
     }
 
-    public async Task<GetDeviceInfoResponse> GetDeviceInfoAsync(long deviceId)
+    public async Task<GetDeviceInfoResponse> GetDeviceInfoAsync(long deviceId, CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetDeviceInfoResponse>(HttpMethod.Get, $"/v1/device/{deviceId}");
+        return await HttpClient.SendRequestAsync<GetDeviceInfoResponse>(HttpMethod.Get, $"/v1/device/{deviceId}", token);
     }
 
-    public async Task<GetDeviceInfoResponse> GetCurrentDeviceInfoAsync()
+    public async Task<GetDeviceInfoResponse> GetCurrentDeviceInfoAsync(CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetDeviceInfoResponse>(HttpMethod.Get, $"/v1/device/info");
+        return await HttpClient.SendRequestAsync<GetDeviceInfoResponse>(HttpMethod.Get, $"/v1/device/info", token);
     }
 
-    public async Task<GetDeviceSettingsResponse> GetDeviceSettingsAsync(long deviceId)
+    public async Task<GetDeviceSettingsResponse> GetDeviceSettingsAsync(long deviceId, CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetDeviceSettingsResponse>(HttpMethod.Get, $"/v1/device/{deviceId}/settings");
+        return await HttpClient.SendRequestAsync<GetDeviceSettingsResponse>(HttpMethod.Get, $"/v1/device/{deviceId}/settings", token);
     }
 
-    public async Task<GetDeviceInfoResponse> SetDeviceSettingsAsync(long deviceId, GetDevicesResponse.Settings settings)
+    public async Task<GetDeviceInfoResponse> SetDeviceSettingsAsync(long deviceId, GetDevicesResponse.Settings settings, CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetDeviceInfoResponse>(HttpMethod.Get, $"/v1/device/{deviceId}/settings", json: settings);
+        return await HttpClient.SendRequestAsync<GetDeviceInfoResponse>(HttpMethod.Get, $"/v1/device/{deviceId}/settings", token, 
+            json: settings);
     }
 }

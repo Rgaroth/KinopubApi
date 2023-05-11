@@ -10,11 +10,14 @@ public abstract class BaseTest
     protected KinopubClient _client;
     protected string _accessToken;
 
+    protected CancellationToken _token;
+
     private static IConfigurationRoot Config;
 
     public BaseTest()
     {
         Config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        _token = new CancellationTokenSource().Token;
     }
 
     [OneTimeSetUp]

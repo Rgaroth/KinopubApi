@@ -11,23 +11,24 @@ internal class VideoContentProcessor : BaseProcessor, IVideoContentProcessor
     {
     }
 
-    public async Task<GetContentTypesResponse> GetContentTypesAsync()
+    public async Task<GetContentTypesResponse> GetContentTypesAsync(CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetContentTypesResponse>(HttpMethod.Get, "/v1/types");
+        return await HttpClient.SendRequestAsync<GetContentTypesResponse>(HttpMethod.Get, "/v1/types", token);
     }
 
-    public async Task<GetContentGenresResponse> GetContentGenresAsync(GenreType? type = null)
+    public async Task<GetContentGenresResponse> GetContentGenresAsync(CancellationToken token, GenreType? type = null)
     {
-        return await HttpClient.SendRequestAsync<GetContentGenresResponse>(HttpMethod.Get, $"/v1/genres",
+        return await HttpClient.SendRequestAsync<GetContentGenresResponse>(HttpMethod.Get, $"/v1/genres", token,
             HttpRequestExtensions.CreateParameters(("type", type)));
     }
 
-    public async Task<GetСountriesResponse> GetСountriesAsync()
+    public async Task<GetСountriesResponse> GetСountriesAsync(CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetСountriesResponse>(HttpMethod.Get, "/v1/countries");
+        return await HttpClient.SendRequestAsync<GetСountriesResponse>(HttpMethod.Get, "/v1/countries", token);
     }
 
     public async Task<GetItemsResponse> GetItemsAsync(
+        CancellationToken token,
         string type = null,
         string title = null,
         long? genreId = null,
@@ -58,12 +59,12 @@ internal class VideoContentProcessor : BaseProcessor, IVideoContentProcessor
         dict.Add("sort", $"{sort}{order}");
 
 
-        return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items", dict);
+        return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items", token, dict);
     }
 
-    public async Task<GetItemsResponse> SearchAsync(string q, int? countPerPage = null, Field? field = null, GenreType? type = null)
+    public async Task<GetItemsResponse> SearchAsync(string q, CancellationToken token, int? countPerPage = null, Field? field = null, GenreType? type = null)
     {
-        return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items/search",
+        return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items/search", token,
             HttpRequestExtensions.CreateParameters(
                 ("q", q),
                 ("perpage", countPerPage),
@@ -71,76 +72,76 @@ internal class VideoContentProcessor : BaseProcessor, IVideoContentProcessor
                 ("type", type)));
     }
 
-    public async Task<GetItemsResponse> GetSimilarAsync(long itemId)
+    public async Task<GetItemsResponse> GetSimilarAsync(long itemId, CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items/similar",
+        return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items/similar", token,
             HttpRequestExtensions.CreateParameters(("id", itemId)));
     }
 
-    public async Task<GetItemResponse> GetItemAsync(long itemId, bool? noLinks = null)
+    public async Task<GetItemResponse> GetItemAsync(long itemId, CancellationToken token, bool? noLinks = null)
     {
-        return await HttpClient.SendRequestAsync<GetItemResponse>(HttpMethod.Get, $"/v1/items/{itemId}",
+        return await HttpClient.SendRequestAsync<GetItemResponse>(HttpMethod.Get, $"/v1/items/{itemId}", token,
             HttpRequestExtensions.CreateParameters(("nolinks", "1")));
     }
 
-    public async Task<GetSubtitlesAndVideosResponse> GetSubtitlesAndVideosAsync(long mediaId)
+    public async Task<GetSubtitlesAndVideosResponse> GetSubtitlesAndVideosAsync(long mediaId, CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetSubtitlesAndVideosResponse>(HttpMethod.Get, $"/v1/items/media-links",
+        return await HttpClient.SendRequestAsync<GetSubtitlesAndVideosResponse>(HttpMethod.Get, $"/v1/items/media-links", token,
             HttpRequestExtensions.CreateParameters(("mid", mediaId)));
     }
 
-    public async Task<UrlItem> GetVideoFileUrlAsync(string filePath, StreamType type)
+    public async Task<UrlItem> GetVideoFileUrlAsync(string filePath, StreamType type, CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<UrlItem>(HttpMethod.Get, $"/v1/items/media-video-link",
+        return await HttpClient.SendRequestAsync<UrlItem>(HttpMethod.Get, $"/v1/items/media-video-link", token,
             HttpRequestExtensions.CreateParameters(
                 ("file", filePath),
                 ("type", type)));
     }
 
-    public async Task<VoteForVideoResponse> VoteForVideoAsync(long itemId, bool isLike)
+    public async Task<VoteForVideoResponse> VoteForVideoAsync(long itemId, bool isLike, CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<VoteForVideoResponse>(HttpMethod.Get, $"/v1/items/vote",
+        return await HttpClient.SendRequestAsync<VoteForVideoResponse>(HttpMethod.Get, $"/v1/items/vote", token,
             HttpRequestExtensions.CreateParameters(
                 ("id", itemId),
                 ("like", isLike ? "1" : "0")));
     }
 
-    public async Task<GetCommentsResponse> GetCommentsAsync(long itemId)
+    public async Task<GetCommentsResponse> GetCommentsAsync(long itemId, CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetCommentsResponse>(HttpMethod.Get, $"/v1/items/comments",
+        return await HttpClient.SendRequestAsync<GetCommentsResponse>(HttpMethod.Get, $"/v1/items/comments", token,
            new Dictionary<string, string>
            {
                {"id", itemId.ToString()}
            });
     }
 
-    public async Task<GetTrailerResponse> GetTrailerAsync(long itemId)
+    public async Task<GetTrailerResponse> GetTrailerAsync(long itemId, CancellationToken token)
     {
-        return await HttpClient.SendRequestAsync<GetTrailerResponse>(HttpMethod.Get, $"/v1/items/trailer",
+        return await HttpClient.SendRequestAsync<GetTrailerResponse>(HttpMethod.Get, $"/v1/items/trailer", token,
             HttpRequestExtensions.CreateParameters(("id", itemId)));
     }
 
-    public async Task<GetItemsResponse> GetFreshAsync(GenreType type, int numPage = 0, int perPage = 25)
+    public async Task<GetItemsResponse> GetFreshAsync(GenreType type, CancellationToken token, int numPage = 0, int perPage = 25)
     {
-        return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items/fresh",
+        return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items/fresh", token,
             HttpRequestExtensions.CreateParameters(
                 ("type", type),
                 ("page", numPage),
                 ("perpage", perPage)));
     }
 
-    public async Task<GetItemsResponse> GetHotAsync(GenreType type, int numPage = 0, int perPage = 25)
+    public async Task<GetItemsResponse> GetHotAsync(GenreType type, CancellationToken token, int numPage = 0, int perPage = 25)
     {
-        return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items/hot",
+        return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items/hot", token,
              HttpRequestExtensions.CreateParameters(
                 ("type", type),
                 ("page", numPage),
                 ("perpage", perPage)));
     }
 
-    public async Task<GetItemsResponse> GetPopularAsync(GenreType type, int numPage = 0, int perPage = 25)
+    public async Task<GetItemsResponse> GetPopularAsync(GenreType type, CancellationToken token, int numPage = 0, int perPage = 25)
     {
-        return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items/popular",
+        return await HttpClient.SendRequestAsync<GetItemsResponse>(HttpMethod.Get, $"/v1/items/popular", token,
              HttpRequestExtensions.CreateParameters(
                 ("type", type),
                 ("page", numPage),

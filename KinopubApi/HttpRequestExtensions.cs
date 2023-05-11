@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Text;
 
 namespace KinopubApi;
@@ -7,7 +8,8 @@ internal static class HttpRequestExtensions
 {
     internal static async Task<T> SendRequestAsync<T>(this HttpClient httpClient, 
         HttpMethod method, 
-        string uri, 
+        string uri,
+        CancellationToken token,
         Dictionary<string, string> parameters = null,
         object json = null)
     {
@@ -22,8 +24,8 @@ internal static class HttpRequestExtensions
             request.Content = new StringContent(JsonConvert.SerializeObject(json), Encoding.UTF8, "application/json");
         }
 
-        var response = await httpClient.SendAsync(request);
-        var content = await response.Content.ReadAsStringAsync();
+        var response = await httpClient.SendAsync(request, token);
+        var content = await response.Content.ReadAsStringAsync(token);
 
         if (!response.IsSuccessStatusCode)
         {
@@ -36,7 +38,8 @@ internal static class HttpRequestExtensions
 
     internal static async Task<HttpResponseMessage> SendRequestAsync(this HttpClient httpClient, 
         HttpMethod method, 
-        string uri, 
+        string uri,
+        CancellationToken token,
         Dictionary<string, string> parameters = null,
         object json = null)
     {
@@ -51,7 +54,7 @@ internal static class HttpRequestExtensions
             request.Content = new StringContent(JsonConvert.SerializeObject(json), Encoding.UTF8, "application/json");
         }
 
-        return await httpClient.SendAsync(request);
+        return await httpClient.SendAsync(request, token);
     }
 
     internal static Dictionary<string, string> CreateParameters(params (string Key, object Value)[] pairs)

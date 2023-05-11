@@ -19,5 +19,5 @@ public interface IKinopubClient
     ITvProcessor TvProcessor { get; }
     IBookmarksProcessor BookmarksProcessor { get; }
 
-    Task<IKinopubResult<string>> GetDeviceCodeAsync();
+    Task<IKinopubResult<string>> GetDeviceCodeAsync(CancellationToken token);
 }
